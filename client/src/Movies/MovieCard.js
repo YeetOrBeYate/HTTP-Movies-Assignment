@@ -4,6 +4,7 @@ const MovieCard = props => {
   const { title, director, metascore, stars } = props.movie;
   return (
     <div className="movie-card">
+      <button onClick={()=>{props.history.push(`/update-item/${props.movie.id}`);}}>Edit</button>
       <h2>{title}</h2>
       <div className="movie-director">
         Director: <em>{director}</em>
