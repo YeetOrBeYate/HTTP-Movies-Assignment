@@ -45,18 +45,18 @@ const MovieUpdate = (props)=>{
     const handleSub = (e)=>{
 
         e.preventDefault();
-        console.log("update",update);
 
         axios.put(`http://localhost:5000/api/movies/${update.id}`, update)
             .then((res)=>{
                 console.log("res", res)
-                setMessage("Nice, the movie's been changed!")
-                setStatus(true);
+                // setMessage("Nice, the movie's been changed!")
+                // setStatus(true);
+                props.history.push('/');
             })
             .catch((err)=>{
                 console.log("err", err);
-                setMessage("Oopsie! Something went wonggg")
-                setStatus(true);
+                // setMessage("Oopsie! Something went wonggg")
+                // setStatus(true);
             })
 
             setUpdate({
@@ -67,8 +67,7 @@ const MovieUpdate = (props)=>{
                 stars: []
             })
 
-        
-       
+            
        
     }
 
