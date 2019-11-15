@@ -11,6 +11,9 @@ const MovieUpdate = (props)=>{
         stars: []
     })
 
+    const [status, setStatus] = React.useState(false);
+    const [message, setMessage] = React.useState("");
+
     React.useEffect(() => {
 
         axios.get(`http://localhost:5000/api/movies/${props.match.params.id}`)
@@ -35,31 +38,43 @@ const MovieUpdate = (props)=>{
         const newStars = update.stars.slice();
 
         newStars[e.target.name] = e.target.value;
-        console.log(newStars)
 
-        setUpdate({...update, ...update.stars = newStars})
-
-     
-     
-     
+        setUpdate({...update, ...update.stars = newStars});
     }
 
     const handleSub = (e)=>{
+
         e.preventDefault();
         console.log("update",update);
-        // axios.put(`http://localhost:5000/api/movie/${update.id}`)
-        setUpdate({
-            ...update,
-            title:"",
-            director:"",
-            metascore: "",
-            stars:[]
-        })
+
+        axios.put(`http://localhost:5000/api/movies/${update.id}`, update)
+            .then((res)=>{
+                console.log("res", res)
+                setMessage("Nice, the movie's been changed!")
+                setStatus(true);
+            })
+            .catch((err)=>{
+                console.log("err", err);
+                setMessage("Oopsie! Something went wonggg")
+                setStatus(true);
+            })
+
+            setUpdate({
+                id: "",
+                title: "",
+                director: "",
+                metascore: "",
+                stars: []
+            })
+
+        
+       
        
     }
 
     return(
         <form className="Update">
+            {status ? <h1>{message}</h1>:<h1>{message}</h1> }
             <div>
                 <label>Title:</label>
                 <input name="title" value={update.title} onChange={handleInput}/>
